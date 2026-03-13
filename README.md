@@ -23,7 +23,7 @@ A simple REST application for managing products. You can create, view, update an
  
 | Method   | URL                  | What it does           | Response status                    |
 |----------|----------------------|------------------------|------------------------------------|
-| `POST`   | `/api/products`      | Create a new product   | `201 Created`                           |
+| `POST`   | `/api/products`      | Create a new product   | `201 Created`                      |
 | `GET`    | `/api/products`      | Get all products       | `200 OK`                           |
 | `GET`    | `/api/products/{id}` | Get one product by ID  | `200 OK` / `404 Not Found`         |
 | `PUT`    | `/api/products/{id}` | Update a product by ID | `200 OK` / `404 Not Found`         |

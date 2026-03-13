@@ -20,7 +20,6 @@ import java.util.List;
  * github github.com/RomanGulevatiy
  */
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Slf4j
 public class ProductServiceImpl implements ProductService {
@@ -32,12 +31,14 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponse create(CreateProductRequest createProductRequest) {
         Product product = mapper.createDtoToEntity(createProductRequest);
+        updateAvailability(product);
 
         Product savedProduct = productRepository.save(product);
         log.info("Product with id {} was created", savedProduct.getId());
         return mapper.toResponse(savedProduct);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<ProductResponse> findAll() {
         return productRepository.findAll().stream()
@@ -45,6 +46,7 @@ public class ProductServiceImpl implements ProductService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public ProductResponse findById(Long id) {
         return productRepository.findById(id)
@@ -64,6 +66,7 @@ public class ProductServiceImpl implements ProductService {
         existing.setDescription(updateProductRequest.getDescription());
         existing.setPrice(updateProductRequest.getPrice());
         existing.setQuantity(updateProductRequest.getQuantity());
+        updateAvailability(existing);
 
         Product updated = productRepository.save(existing);
         log.info("Product with id {} was updated", id);
@@ -75,5 +78,9 @@ public class ProductServiceImpl implements ProductService {
     public void delete(Long id) {
         productRepository.deleteById(id);
         log.info("Product with id {} was deleted", id);
+    }
+
+    private void updateAvailability(Product product) {
+        product.setAvailable(product.getQuantity() > 0);
     }
 }

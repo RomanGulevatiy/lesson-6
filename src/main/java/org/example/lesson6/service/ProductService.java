@@ -1,18 +1,24 @@
 package org.example.lesson6.service;
 
-import lombok.RequiredArgsConstructor;
-import org.example.lesson6.repository.ProductRepository;
-import org.springframework.stereotype.Service;
+import org.example.lesson6.dto.CreateProductRequest;
+import org.example.lesson6.dto.ProductResponse;
+import org.example.lesson6.dto.UpdateProductRequest;
+
+import java.util.List;
 
 /**
  * Created by Roman Gulevatiy on 12.03.2026.
  * github github.com/RomanGulevatiy
  */
-@Service
-@RequiredArgsConstructor
-public class ProductService {
+public interface ProductService {
 
-    private final ProductRepository productRepository;
+    ProductResponse create(CreateProductRequest createProductRequest);
 
-    
+    List<ProductResponse> findAll();
+
+    ProductResponse findById(Long id);
+
+    ProductResponse update(Long id, UpdateProductRequest updateProductRequest);
+
+    void delete(Long id);
 }

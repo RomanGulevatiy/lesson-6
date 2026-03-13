@@ -5,6 +5,7 @@ import org.example.lesson6.dto.CreateProductRequest;
 import org.example.lesson6.dto.ProductResponse;
 import org.example.lesson6.dto.UpdateProductRequest;
 import org.example.lesson6.service.ProductService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
     public ProductResponse createProduct(@RequestBody CreateProductRequest createProductRequest) {
         return productService.create(createProductRequest);
     }
@@ -42,6 +44,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProduct(@PathVariable Long id) {
         productService.delete(id);
     }
